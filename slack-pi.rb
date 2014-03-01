@@ -1,12 +1,7 @@
 require_relative 'lib/led'
 
 def flip led
-  if led.on?
-    led.off
-  else
-    led.on
-  end
-
+  led.toggle
   sleep 0.1
 end
 
@@ -23,3 +18,8 @@ yellow = Led.new "Yellow", 25
 
   sleep 0.5
 end
+
+red.off
+green.off
+blue.off
+yellow.off

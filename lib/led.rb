@@ -1,4 +1,4 @@
-require 'pipiper'
+require 'pi_piper'
 include PiPiper
 
 class Led
@@ -11,18 +11,28 @@ class Led
   end
 
   def on
-    pin.on
+    @pin.on
   end
 
   def off
-    pin.off
+    @pin.off
+  end
+
+  def toggle
+    if off?
+      on
+    else
+      off
+    end
   end
 
   def on?
+    @pin.read
     @pin.on?
   end
 
   def off?
+    @pin.read
     @pin.off?
   end
 end
