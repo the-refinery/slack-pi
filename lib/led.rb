@@ -7,7 +7,7 @@ class Led
 
   def initialize name, pin_number
     @name = name
-    pin = PiPiper::Pin.new(pin: pin_number, direction: :out)
+    @pin = PiPiper::Pin.new(pin: pin_number, direction: :out)
   end
 
   def on
@@ -16,5 +16,13 @@ class Led
 
   def off
     pin.off
+  end
+
+  def on?
+    @pin.on?
+  end
+
+  def off?
+    @pin.off?
   end
 end
