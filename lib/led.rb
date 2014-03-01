@@ -26,6 +26,20 @@ class Led
     end
   end
 
+  def blink times=5, cycle=0.5
+    @pin.off
+    sleep cycle
+
+    0.step(times-1) do
+      @pin.on
+      sleep cycle
+      @pin.off
+      sleep cycle
+    end
+
+    @pin.off
+  end
+
   def on?
     @pin.read
     @pin.on?
