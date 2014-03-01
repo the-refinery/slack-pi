@@ -1,1 +1,8 @@
-@slack_token = "YOUR_KEY_HERE"
+SLACK_TOKEN= "YOUR_TOKEN_HERE"
+
+@monitored_channels = {
+  blue: "CHANNEL_ID_1",
+  red: "CHANNEL_ID_2"
+}
+
+KEYWORDS = ["bacon", "raspberry"]
