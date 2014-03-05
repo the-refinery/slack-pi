@@ -33,7 +33,7 @@ class Slack
     end
   end
 
-  def api_request method, params
+  def api_request method, params={}
     params[:token] = SLACK_TOKEN
 
     query = Array.new
@@ -63,11 +63,28 @@ private
   end
 
   def setup_users
+    @led.blink 2
+
     @users = []
+
+    data = api_request("users.list")["members"]
+
+    data.each do |member|
+      user = User.new member
+      @users << user
+    end
   end
 
   def setup_keywords
     @keywords = KEYWORDS
+
+    @users.each do |user|
+      if user.matches_keywords(KEYWORDS)
+        @keywords << "<@#{user.id}>"
+      end
+    end
+
+    puts @keywords
   end
 
 end
