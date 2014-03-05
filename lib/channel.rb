@@ -4,12 +4,14 @@ require "json"
 
 class Channel
 
-  def initialize id, led
+  attr_reader :color
+
+  def initialize id, color
     @id = id
-    @led = led
+    @color = color
   end
 
-  def poll
+  def poll keywords
     messages = get_messages
 
     keyword_found = false
@@ -18,7 +20,7 @@ class Channel
       unless message["text"].nil?
         text = message["text"].downcase
 
-        KEYWORDS.each do |keyword|
+        keywords.each do |keyword|
           if text.include? keyword.downcase
             keyword_found = true
           end
@@ -27,13 +29,12 @@ class Channel
     end
 
     if keyword_found
-      notify
+      true
     end
-
   end
 
 private
-  
+
   def get_messages
     query = Array.new
     query << "token=#{SLACK_TOKEN}"
@@ -49,11 +50,8 @@ private
 
     data = JSON.parse(response.body)
 
-    data["messages"]
-  end
 
-  def notify
-    @led.blink
+    data["messages"]
   end
 
 end

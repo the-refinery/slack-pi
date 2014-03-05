@@ -1,8 +1,11 @@
 SLACK_TOKEN= "YOUR_TOKEN_HERE"
 
-@monitored_channels = {
-  blue: "CHANNEL_ID_1",
-  red: "CHANNEL_ID_2"
+ARDUINO_DEVICE = "/dev/ttyACM0"
+ARDUINO_BAUD = 9600
+
+MONITORED_CHANNELS= {
+  "C024H1MUH" => "3366ff",
+  "C025FCTT9" => "ffff00"
 }
 
-KEYWORDS = ["bacon", "raspberry"]
+KEYWORDS = ["bacon", "command"]

@@ -1,21 +1,14 @@
 require_relative 'lib/led'
-require_relative 'lib/channel'
-require_relative 'config/slack_config'
+require_relative 'lib/arduino'
+require_relative 'lib/slack'
 
-@board = {
-  red:  Led.new("Red", 18),
-  green:  Led.new("Green", 23),
-  blue:  Led.new("Blue", 24),
-  yellow:  Led.new("Yellow", 25)
-}
+@arduino = Arduino.new
 
-@channels = {}
+@slack = Slack.new(Led.new("Yellow", 18))
 
-@monitored_channels.each_pair do |color, channel_id|
-  @channels[channel_id] = Channel.new(channel_id, @board[color])
-end
+@slack.poll
 
-@channels.each_value do |channel|
-  channel.poll
+@slack.notifications.each do |color|
+  @arduino.pulse_color color
 end
 

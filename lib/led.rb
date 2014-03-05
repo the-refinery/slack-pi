@@ -26,7 +26,7 @@ class Led
     end
   end
 
-  def blink times=5, cycle=0.5
+  def blink times=1, cycle=0.25
     @pin.off
     sleep cycle
 
