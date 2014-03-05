@@ -83,8 +83,6 @@ private
         @keywords << "<@#{user.id}>"
       end
     end
-
-    puts @keywords
   end
 
 end
