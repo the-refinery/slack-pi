@@ -9,8 +9,11 @@ require_relative 'lib/slack'
 while true do
   @slack.poll
 
-  @slack.notifications.each do |color|
-    @arduino.pulse_color color
+  #we'll cycle the colors 3 times
+  0.step(2) do
+    @slack.notifications.each do |color|
+      @arduino.pulse_color color
+    end
   end
 
   #just to give Ctrl-C a faster effect

@@ -2,9 +2,10 @@ require 'serialport'
 
 class Arduino
 
-  def initialize
+  def initialize debug=false
     @sp = SerialPort.new "/dev/ttyACM0", 9600
     @sp.read_timeout = 500
+    @debug = debug
   end
 
   def pulse_color hex, pulse_times = 1
@@ -36,11 +37,13 @@ class Arduino
 
     @sp.write color
 
-    resp = @sp.readline("\n").chomp
-
-    while resp != "DONE"
-      #print "#{resp}\n"
+    if @debug
       resp = @sp.readline("\n").chomp
+
+      while resp != "DONE"
+        print "#{resp}\n"
+        resp = @sp.readline("\n").chomp
+      end
     end
   end
 
