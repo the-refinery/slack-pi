@@ -1,17 +1,14 @@
-require "net/http"
-require "uri"
-require "json"
-
 class Channel
 
   attr_reader :color
 
-  def initialize id, color
+  def initialize slack, id, color
+    @slack = slack
     @id = id
     @color = color
   end
 
-  def poll keywords
+  def poll
     messages = get_messages
 
     keyword_found = false
@@ -20,7 +17,7 @@ class Channel
       unless message["text"].nil?
         text = message["text"].downcase
 
-        keywords.each do |keyword|
+        @slack.keywords.each do |keyword|
           if text.include? keyword.downcase
             keyword_found = true
           end
@@ -36,21 +33,7 @@ class Channel
 private
 
   def get_messages
-    query = Array.new
-    query << "token=#{SLACK_TOKEN}"
-    query << "channel=#{@id}"
-
-    uri = URI.parse("https://slack.com/api/channels.history")
-    uri.query = query.join("&")
-
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
-
-    data = JSON.parse(response.body)
-
-
+    data = @slack.api_request "channels.history", {:channel => @id}
     data["messages"]
   end
 
