@@ -11,8 +11,10 @@ class Slack
   attr_reader :notifications,
               :keywords
 
-  def initialize led
-    @led = led
+  def initialize setup_led, process_led
+    @setup_led = setup_led
+    @process_led = process_led
+
     setup_channels
     setup_users
     setup_keywords
@@ -23,7 +25,7 @@ class Slack
     @notifications = []
 
     @channels.each_value do |channel|
-      @led.blink
+      @process_led.blink
 
       notify = channel.poll
 
@@ -63,7 +65,7 @@ private
   end
 
   def setup_users
-    @led.blink 2
+    @setup_led.blink 2
 
     @users = []
 

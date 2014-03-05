@@ -4,7 +4,10 @@ require_relative 'lib/slack'
 
 @arduino = Arduino.new
 
-@slack = Slack.new(Led.new("Yellow", 18))
+yellow_led = Led.new("Yellow", 18)
+blue_led = Led.new("Yellow", 23)
+
+@slack = Slack.new(yellow_led, blue_led)
 
 while true do
   @slack.poll
