@@ -83,6 +83,8 @@ private
         @keywords << "<@#{user.id}>"
       end
     end
+
+    puts "Searching for: [#{@keywords.join(", ")}]"
   end
 
 end

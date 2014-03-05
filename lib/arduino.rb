@@ -39,7 +39,7 @@ class Arduino
     resp = @sp.readline("\n").chomp
 
     while resp != "DONE"
-      print "#{resp}\n"
+      #print "#{resp}\n"
       resp = @sp.readline("\n").chomp
     end
   end

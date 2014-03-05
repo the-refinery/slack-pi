@@ -33,7 +33,21 @@ class Channel
 private
 
   def get_messages
-    data = @slack.api_request "channels.history", {:channel => @id}
+    params = {:channel => @id}
+
+    unless @latest.nil?
+      params[:oldest] = @latest
+      params[:count] = 300
+    end
+
+    data = @slack.api_request "channels.history", params
+
+    if data["messages"].count > 0
+      @latest = data["messages"].first["ts"]
+    end
+
+    puts "#{@id}: #{data["messages"].count}, #{@latest}"
+
     data["messages"]
   end
 
